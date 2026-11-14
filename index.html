@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#07111f" />
+  <title>ASTRA | Astronaut Health Monitoring</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">A</div>
+        <div><div class="brand-name">ASTRA<span> / HEALTH</span></div><div class="brand-sub">MISSION TELEMETRY SYSTEM</div></div>
+      </div>
+      <div class="side-label">MISSION</div>
+      <div class="mission-card">
+        <div class="mission-icon">⌁</div>
+        <div><strong>ORION-07</strong><small>Deep Space Research</small></div>
+        <span class="live-dot"></span>
+      </div>
+      <nav>
+        <a class="nav-link active" href="#overview"><span>▦</span> Overview</a>
+        <a class="nav-link" href="#vitals"><span>♡</span> Vital signs</a>
+        <a class="nav-link" href="#analytics"><span>⌁</span> Analytics</a>
+        <a class="nav-link" href="#alerts"><span>⚑</span> Alert center <b id="navAlertCount">0</b></a>
+        <a class="nav-link" href="#controls"><span>⚙</span> Simulator controls</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="connection"><span class="live-dot"></span><div><strong>SIMULATION LINK</strong><small>Browser environment</small></div></div>
+        <div class="sidebar-note">TRAINING PROTOTYPE<br>NOT FOR CLINICAL OR FLIGHT USE</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <div class="eyebrow">FLIGHT OPERATIONS / CREW HEALTH</div>
+          <h1>Health overview <span class="live-pill"><i></i> LIVE SIMULATION</span></h1>
+        </div>
+        <div class="top-actions">
+          <div class="clock-block"><small>MISSION ELAPSED</small><strong id="missionClock">DAY 018 · 06:42:10</strong></div>
+          <button class="icon-button" id="pauseBtn" title="Pause or resume simulation">Ⅱ</button>
+          <div class="operator"><div class="operator-avatar">MC</div><div><strong>Mission Control</strong><small>Operator console</small></div></div>
+        </div>
+      </header>
+
+      <section class="mission-banner" id="overview">
+        <div class="banner-orbit"></div>
+        <div class="banner-content">
+          <div class="eyebrow">ACTIVE CREW MEMBER <span class="separator">/</span> CREW ID AST-014</div>
+          <h2>Commander Alex Morgan</h2>
+          <p>Orbital research mission · Crew health telemetry overview</p>
+          <div class="banner-meta"><span>◉ ORION-07</span><span>⌖ LOW EARTH ORBIT · SIMULATED</span><span>◷ MISSION DAY 018</span></div>
+        </div>
+        <div class="crew-status"><div class="status-ring">AM</div><div><small>CREW STATUS</small><strong id="overallStatus">NOMINAL</strong><span id="statusDescription">All monitored values in configured range</span></div></div>
+      </section>
+
+      <section class="section-head" id="vitals"><div><div class="eyebrow">REAL-TIME TELEMETRY</div><h2>Vital signs</h2></div><div class="updated">LAST UPDATE <strong id="lastUpdate">--:--:--</strong></div></section>
+      <section class="vitals-grid">
+        <article class="metric-card">
+          <div class="metric-top"><span>HEART RATE</span><span class="metric-icon red">♡</span></div>
+          <div class="metric-value"><strong id="heartValue">72</strong><span>BPM</span></div>
+          <div class="metric-foot"><span id="heartState" class="state normal">● NORMAL</span><span>Beats / min</span></div>
+          <div class="mini-line red-line"><svg viewBox="0 0 240 38" preserveAspectRatio="none"><polyline points="0,22 18,22 28,20 36,22 45,5 53,34 62,22 82,22 91,19 99,22 108,6 116,33 125,22 145,22 155,18 163,22 172,5 180,33 189,22 210,22 220,19 240,22"/></svg></div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-top"><span>OXYGEN SATURATION</span><span class="metric-icon cyan">◉</span></div>
+          <div class="metric-value"><strong id="spo2Value">98</strong><span>% SpO₂</span></div>
+          <div class="metric-foot"><span id="spo2State" class="state normal">● NORMAL</span><span>Blood oxygen</span></div>
+          <div class="metric-bar"><i id="spo2Bar" style="width:98%"></i></div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-top"><span>BODY TEMPERATURE</span><span class="metric-icon orange">♨</span></div>
+          <div class="metric-value"><strong id="tempValue">36.8</strong><span>°C</span></div>
+          <div class="metric-foot"><span id="tempState" class="state normal">● NORMAL</span><span>Core temperature</span></div>
+          <div class="temp-track"><i id="tempMarker" style="left:45%"></i></div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-top"><span>BLOOD PRESSURE</span><span class="metric-icon purple">⌁</span></div>
+          <div class="metric-value"><strong id="bpValue">118/78</strong><span>mmHg</span></div>
+          <div class="metric-foot"><span id="bpState" class="state normal">● NORMAL</span><span>Systolic / diastolic</span></div>
+          <div class="bp-bars"><i id="sysBar" style="width:65%"></i><i id="diaBar" style="width:52%"></i></div>
+        </article>
+      </section>
+
+      <section class="content-grid" id="analytics">
+        <article class="panel chart-panel">
+          <div class="panel-head"><div><div class="eyebrow">TELEMETRY HISTORY</div><h3>Heart rate trend</h3></div><span class="chart-tag">BPM · LIVE</span></div>
+          <div class="chart-wrap"><canvas id="heartChart"></canvas></div>
+        </article>
+        <article class="panel">
+          <div class="panel-head"><div><div class="eyebrow">CREW WELLNESS</div><h3>Activity snapshot</h3></div><span class="chart-tag">TODAY</span></div>
+          <div class="activity-list">
+            <div class="activity-row"><div class="activity-symbol">◷</div><div class="activity-info"><strong>Sleep duration</strong><small>Target: 7–9 hours</small><div class="progress"><i style="width:84%"></i></div></div><b>7.6h</b></div>
+            <div class="activity-row"><div class="activity-symbol">⌁</div><div class="activity-info"><strong>Physical activity</strong><small>Target: 60 minutes</small><div class="progress"><i style="width:62%"></i></div></div><b>37m</b></div>
+            <div class="activity-row"><div class="activity-symbol">◌</div><div class="activity-info"><strong>Hydration log</strong><small>Illustrative daily target</small><div class="progress"><i style="width:70%"></i></div></div><b>1.8L</b></div>
+          </div>
+          <div class="wellness-note"><span>✦</span><div><strong>Wellness summary</strong><small>Activity figures are sample values for this demonstration.</small></div></div>
+        </article>
+      </section>
+
+      <section class="bottom-grid">
+        <article class="panel" id="alerts">
+          <div class="panel-head"><div><div class="eyebrow">EVENT LOG</div><h3>Alert center</h3></div><button class="text-button" id="clearAlerts">Clear log</button></div>
+          <div class="alert-list" id="alertList"><div class="empty-state">✓ No alerts recorded in this session.</div></div>
+        </article>
+        <article class="panel controls-panel" id="controls">
+          <div class="panel-head"><div><div class="eyebrow">TEST ENVIRONMENT</div><h3>Simulator controls</h3></div><span class="demo-tag">DEMO</span></div>
+          <p class="control-description">Generate new sample readings or enter values manually to test the alert system.</p>
+          <div class="control-actions"><button class="primary-button" id="generateBtn">↻ Generate readings</button><button class="secondary-button" id="normalBtn">Reset to normal</button></div>
+          <div class="manual-form">
+            <div class="form-title">MANUAL INPUT</div>
+            <div class="form-grid">
+              <label>Heart rate <div class="input-unit"><input id="manualHeart" type="number" min="30" max="220" value="72"><span>BPM</span></div></label>
+              <label>SpO₂ <div class="input-unit"><input id="manualSpo2" type="number" min="50" max="100" value="98"><span>%</span></div></label>
+              <label>Temperature <div class="input-unit"><input id="manualTemp" type="number" min="30" max="45" step="0.1" value="36.8"><span>°C</span></div></label>
+              <label>Systolic BP <div class="input-unit"><input id="manualSys" type="number" min="60" max="250" value="118"><span>mmHg</span></div></label>
+              <label>Diastolic BP <div class="input-unit"><input id="manualDia" type="number" min="30" max="150" value="78"><span>mmHg</span></div></label>
+            </div>
+            <button class="secondary-button apply-button" id="applyBtn">Apply manual readings</button>
+            <div class="form-hint">Values are simulated and do not represent medical advice or actual astronaut telemetry.</div>
+          </div>
+        </article>
+      </section>
+      <footer><span>ASTRA HEALTH MONITORING · STUDENT PROJECT PROTOTYPE</span><span>SIMULATED DATA ONLY <i>●</i> LOCAL BROWSER STORAGE</span></footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="script.js"></script>
+</body>
+</html>
