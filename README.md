@@ -2,6 +2,10 @@
 
 A front-end-only student project built with HTML, CSS and JavaScript. It uses simulated readings and does not connect to real sensors.
 
+## 🌐 Live Demo
+
+**[🚀 View ASTRA — Astronaut Health Monitoring System](https://krishnajith777.github.io/Astronaut-Health-Monitoring-System/)**
+
 ## Run it
 1. Extract the ZIP.
 2. Open the `astronaut-health-monitor` folder in VS Code.
